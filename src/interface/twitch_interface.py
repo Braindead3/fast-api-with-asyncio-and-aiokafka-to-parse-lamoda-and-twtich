@@ -15,38 +15,38 @@ router = APIRouter(tags=['twitch'], prefix='/streamer')
 streamer_service = StreamerService(StreamerRepository(db_client))
 
 
-@router.get('/get-all', response_model=list[Streamer])
+@router.get('/', response_model=list[Streamer])
 async def get_all_streamers() -> list[Streamer]:
     return streamer_service.get_all_streamer()
 
 
-@router.delete('/del-all', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/', status_code=status.HTTP_204_NO_CONTENT)
 async def del_all_streamers():
     return streamer_service.delete_all_streamers()
 
 
-@router.get('/get-by-id/{streamer_id}', response_model=Streamer)
+@router.get('/{streamer_id}', response_model=Streamer)
 async def get_streamer_by_id(
         streamer_id: int = Path(None, description='The ID of the streamer you would like to view', gt=0)) -> Streamer:
     return streamer_service.get_streamer_by_id(streamer_id)
 
 
-@router.get('/get-by-user-name/{user_name}', response_model=Streamer)
+@router.get('/{user_name}', response_model=Streamer)
 async def get_streamer_by_user_name(user_name: Optional[str] = None) -> Streamer:
     return streamer_service.get_streamer_by_user_name(user_name)
 
 
-@router.post('/create', response_model=Streamer)
+@router.post('/', response_model=Streamer)
 async def create_streamer(streamer: Streamer) -> Streamer:
     return streamer_service.create_streamer(streamer)
 
 
-@router.put('/update', response_model=Streamer)
+@router.put('/', response_model=Streamer)
 async def update_streamer(streamer: UpdateStreamer) -> Streamer:
     return streamer_service.update_streamer(streamer)
 
 
-@router.delete('/delete/{streamer_id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/{streamer_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_streamer(streamer_id: int = Path(description='The ID of the streamer to delete')) -> {}:
     return streamer_service.delete_streamer(streamer_id)
 

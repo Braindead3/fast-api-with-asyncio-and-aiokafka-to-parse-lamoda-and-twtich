@@ -14,38 +14,38 @@ router = APIRouter(prefix="/products", tags=['lamoda'])
 product_service = ProductService(ProductRepository(db_client))
 
 
-@router.get('/get-all', response_model=list[Product])
+@router.get('/', response_model=list[Product])
 async def get_all_products() -> list[Product]:
     return product_service.get_all_products()
 
 
-@router.delete('/delete-all', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/', status_code=status.HTTP_204_NO_CONTENT)
 async def del_all_products():
     return product_service.delete_all_products()
 
 
-@router.get('/get-by-id/{product_id}', response_model=Product)
+@router.get('/{product_id}', response_model=Product)
 async def get_product_by_id(
         product_id: int = Path(None, description='The ID of the product you would like to view', gte=0)) -> Product:
     return product_service.get_product_by_id(product_id)
 
 
-@router.get('/get-by-name/{product_name}', response_model=Product)
+@router.get('/{product_name}', response_model=Product)
 async def get_product_by_name(product_name: Optional[str] = None) -> Product:
     return product_service.get_product_by_name(product_name)
 
 
-@router.post('/create', response_model=Product)
+@router.post('/', response_model=Product)
 async def create_product(product: Product) -> Product:
     return product_service.create_product(product)
 
 
-@router.put('/update', response_model=Product)
+@router.put('/', response_model=Product)
 async def update_product(product: UpdateProduct) -> Product:
     return product_service.update_product(product)
 
 
-@router.delete('/delete/{product_id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/{product_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_product(product_id: int = Path(description='The ID of the product to delete')) -> {}:
     return product_service.delete_product(product_id)
 
